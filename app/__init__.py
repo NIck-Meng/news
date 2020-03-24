@@ -19,7 +19,7 @@ def create_app(config_name):
 
     db.init_app(app)
     db.app=app
-    # db.create_all()
+    db.create_all()
     # Feed.generate_fake(50)
 
     from .main import main as main_blueprint
@@ -28,6 +28,8 @@ def create_app(config_name):
     from .api_1_0 import api as api_blueprint
     app.register_blueprint(api_blueprint)
 
+    from .auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint)
     return app
 
 

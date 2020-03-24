@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册明日头条</title>
+</head>
+<body>
+    <form method="post">
+        {{ form.csrf_token }}
+        {{ form.email.label }} {{ form.email }}<br>
+        {{ form.username.label }} {{ form.username }}<br>
+        {{ form.password.label }} {{ form.password }}<br>
+        {{ form.password2.label }} {{ form.password2 }}<br>
+        {{ form.submit.label }} {{ form.submit }}<br>
+    </form>
+</body>
+</html>

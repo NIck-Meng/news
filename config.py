@@ -9,7 +9,7 @@ class Config:
     SQLALCHEMY_RECORD_QUERIES=True
     FLASK_DB_QUERY_TIMEOUT=0.5
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
+    SECRET_KEY ="123"
 
 class DevelopmentConfig(Config):
     DEBUG=True

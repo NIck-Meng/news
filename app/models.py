@@ -9,7 +9,7 @@ class BaseModel(object):
     updated = db.Column(db.DateTime, default=datetime.datetime.now(), onupdate=datetime.datetime.now())  # 记录的更新时间
 
 
-class Feed(db.Model,BaseModel):
+class Feed(db.Model):
     __tablename__ = 'Feed'
     id=db.Column(db.Integer,primary_key=True)
     chinese_tag=db.Column(db.String(64),default="1")
@@ -125,6 +125,9 @@ class User(BaseModel, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)  # 用户编号
     nick_name = db.Column(db.String(32), unique=True, nullable=False)  # 用户昵称
+    email=db.Column(db.String(32))
+    username = db.Column(db.String(32))
+    password=db.Column(db.String(32))
     password_hash = db.Column(db.String(128), nullable=False)  # 加密的密码
     mobile = db.Column(db.String(11), unique=True, nullable=False)  # 手机号
     avatar_url = db.Column(db.String(256))  # 用户头像路径
