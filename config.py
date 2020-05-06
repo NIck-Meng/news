@@ -5,11 +5,12 @@ basedir=os.path.abspath(os.path.dirname(__file__))
 class Config:
     # 数据库配置
     SQLALCHEMY_COMMIT_ON_TEARDOWN= True
-    SQLALCHEMY_ECHO = True # 输出执行的sql语句
+    # SQLALCHEMY_ECHO = True # 输出执行的sql语句
     SQLALCHEMY_RECORD_QUERIES=True
     FLASK_DB_QUERY_TIMEOUT=0.5
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY ="123"
+    DEBUG_TB_INTERCEPT_REDIRECTS = False   #Flask_DebugToolbar会默认拦截重定向
 
 class DevelopmentConfig(Config):
     DEBUG=True

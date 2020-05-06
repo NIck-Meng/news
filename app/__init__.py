@@ -2,12 +2,20 @@ from flask import Flask,render_template,request,session
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
+from flask_debugtoolbar import DebugToolbarExtension
+from flask_login import LoginManager
+
+
 from config import config_own
 
 db=SQLAlchemy()
 moment=Moment()
 bootstrap=Bootstrap()
+toolbar=DebugToolbarExtension()
+login_manager=LoginManager()
 
+login_manager.session_protection='strong'
+login_manager.login_view='auth.simple_login'
 
 
 def create_app(config_name):
@@ -16,6 +24,8 @@ def create_app(config_name):
 
     bootstrap.init_app(app)
     moment.init_app(app)
+    toolbar.init_app(app)
+    login_manager.init_app(app)
 
     db.init_app(app)
     db.app=app

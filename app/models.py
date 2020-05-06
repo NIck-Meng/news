@@ -1,108 +1,13 @@
 from . import db,constants
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from flask_login import UserMixin,AnonymousUserMixin
+from . import login_manager
 
 class BaseModel(object):
     """模型基类，为每个模型补充创建时间与更新时间"""
     created = db.Column(db.DateTime, default=datetime.datetime.now())  # 记录的创建时间
     updated = db.Column(db.DateTime, default=datetime.datetime.now(), onupdate=datetime.datetime.now())  # 记录的更新时间
-
-
-class Feed(db.Model):
-    __tablename__ = 'Feed'
-    id=db.Column(db.Integer,primary_key=True)
-    chinese_tag=db.Column(db.String(64),default="1")
-    media_avatar_url=db.Column(db.String(64),default="www.toutiao.com")
-    is_feed_ad=db.Column(db.Boolean)
-    tag_url=db.Column(db.String(64))
-    title=db.Column(db.String(64),default="1")
-    single_mode=db.Column(db.Boolean)
-    middle_mode=db.Column(db.Boolean)
-    abstract=db.Column(db.String(64),default="1")
-    tag=db.Column(db.String(64),default="1")
-    behot_time=db.Column(db.DateTime)
-    source_url=db.Column(db.String(64))
-    source=db.Column(db.String(64))
-    more_mode=db.Column(db.Boolean)
-    article_genre=db.Column(db.String(64))
-    comments_count=db.Column(db.Integer,default=1)
-    group_source=db.Column(db.Integer)
-    item_id=db.Column(db.String(64))
-    has_gallery=db.Column(db.Boolean)
-    group_id=db.Column(db.String(64))
-    media_url=db.Column(db.String(64),default="1")
-
-    def __repr__(self):
-        return "<id={0} Feed >".format(self.id)
-
-    def to_json(self):
-        feed={
-            "chinese_tag": self.chinese_tag,
-            "media_avatar_url": self.media_avatar_url,
-            "is_feed_ad": self.is_feed_ad,
-            "tag_url": self.tag_url,
-            "title": self.title,
-            "single_mode": self.single_mode,
-            "middle_mode": self.middle_mode,
-            "abstract": self.abstract,
-            "tag": self.tag,
-            "behot_time": self.behot_time,
-            "source_url": self.source_url,
-            "source": self.source,
-            "more_mode": self.more_mode,
-            "article_genre": self.article_genre,
-            "comments_count": self.comments_count,
-            "group_source": self.group_source,
-            "item_id": self.item_id,
-            "has_gallery": self.has_gallery,
-            "group_id": self.group_id,
-            "media_url": self.media_url
-        }
-        return feed
-
-
-
-
-    #生成一些虚拟数据
-    @staticmethod
-    def generate_fake(count=100):
-        from sqlalchemy.exc import IntegrityError
-        from random import seed
-        seed()
-        import forgery_py
-        for i in range(count):
-            feed = Feed.query.filter_by(id=i + 1).first()
-            if feed is None:
-                u=Feed(
-                # id=db.Column(db.Integer, primary_key=True)
-            chinese_tag =forgery_py.personal.race(), #  "中文标签"
-            media_avatar_url =forgery_py.internet.domain_name(),
-            is_feed_ad=forgery_py.basic.boolean(),
-            tag_url=forgery_py.internet.domain_name(),
-            title =forgery_py.personal.language(),
-            single_mode=forgery_py.basic.boolean(),
-            middle_mode=forgery_py.basic.boolean(),
-            abstract = forgery_py.lorem_ipsum.title(),
-            tag = forgery_py.internet.first_name(),
-            behot_time=forgery_py.date.datetime(),
-            source_url=forgery_py.internet.domain_name(),
-            source=forgery_py.name.company_name(),
-            more_mode=forgery_py.basic.boolean(),
-            article_genre=forgery_py.lorem_ipsum.title(),
-            comments_count = forgery_py.basic.number(),
-            group_source=forgery_py.basic.number(),
-            item_id=forgery_py.basic.number(),
-            has_gallery=forgery_py.basic.boolean(),
-            group_id=forgery_py.basic.number(),
-            media_url = forgery_py.internet.domain_name()
-                   )
-
-                db.session.add(u)
-        try:
-            db.session.commit()
-        except IntegrityError:
-            db.session.rollback()
 
 # 用户收藏表，建立用户与其收藏新闻多对多的关系
 user_collection = db.Table(
@@ -119,18 +24,18 @@ user_follows = db.Table(
 )
 
 
-class User(BaseModel, db.Model):
+class User(db.Model,BaseModel,UserMixin):
     """用户"""
     __tablename__ = "user"
 
     id = db.Column(db.Integer, primary_key=True)  # 用户编号
-    nick_name = db.Column(db.String(32), unique=True, nullable=False)  # 用户昵称
+    nick_name = db.Column(db.String(32), unique=True, nullable=True)  # 用户昵称
     email=db.Column(db.String(32))
     username = db.Column(db.String(32))
     password=db.Column(db.String(32))
     password_hash = db.Column(db.String(128), nullable=False)  # 加密的密码
-    mobile = db.Column(db.String(11), unique=True, nullable=False)  # 手机号
-    avatar_url = db.Column(db.String(256))  # 用户头像路径
+    mobile = db.Column(db.String(11), unique=True, nullable=True)  # 手机号
+    avatar_url = db.Column(db.String(256),nullable=True)  # 用户头像路径
     last_login = db.Column(db.DateTime, default=datetime.datetime.now)  # 最后一次登录时间
     is_admin = db.Column(db.Boolean, default=False)
     signature = db.Column(db.String(512))  # 用户签名
@@ -163,9 +68,9 @@ class User(BaseModel, db.Model):
         # 用户密码加密并保存
         self.password_hash = generate_password_hash(value)
 
-    # def check_passowrd(self, password):
-    #     # 校验加密后的密码
-    #     return check_password_hash(self.password_hash, password)
+    def check_passowrd(self, password):
+        # 校验加密后的密码
+        return check_password_hash(self.password_hash, password)
 
     def to_dict(self):
         resp_dict = {
@@ -197,8 +102,6 @@ class User(BaseModel, db.Model):
         :return: 返回校验的结果 True/False
         """
         return check_password_hash(self.password_hash, password)
-
-
 
 
 
@@ -305,3 +208,105 @@ class Category(BaseModel, db.Model):
             "name": self.name
         }
         return resp_dict
+
+
+
+class Feed(db.Model):
+    __tablename__ = 'Feed'
+    id=db.Column(db.Integer,primary_key=True)
+    chinese_tag=db.Column(db.String(64),default="1")
+    media_avatar_url=db.Column(db.String(64),default="www.toutiao.com")
+    is_feed_ad=db.Column(db.Boolean)
+    tag_url=db.Column(db.String(64))
+    title=db.Column(db.String(64),default="1")
+    single_mode=db.Column(db.Boolean)
+    middle_mode=db.Column(db.Boolean)
+    abstract=db.Column(db.String(64),default="1")
+    tag=db.Column(db.String(64),default="1")
+    behot_time=db.Column(db.DateTime)
+    source_url=db.Column(db.String(64))
+    source=db.Column(db.String(64))
+    more_mode=db.Column(db.Boolean)
+    article_genre=db.Column(db.String(64))
+    comments_count=db.Column(db.Integer,default=1)
+    group_source=db.Column(db.Integer)
+    item_id=db.Column(db.String(64))
+    has_gallery=db.Column(db.Boolean)
+    group_id=db.Column(db.String(64))
+    media_url=db.Column(db.String(64),default="1")
+
+    def __repr__(self):
+        return "<id={0} Feed >".format(self.id)
+
+    def to_json(self):
+        feed={
+            "chinese_tag": self.chinese_tag,
+            "media_avatar_url": self.media_avatar_url,
+            "is_feed_ad": self.is_feed_ad,
+            "tag_url": self.tag_url,
+            "title": self.title,
+            "single_mode": self.single_mode,
+            "middle_mode": self.middle_mode,
+            "abstract": self.abstract,
+            "tag": self.tag,
+            "behot_time": self.behot_time,
+            "source_url": self.source_url,
+            "source": self.source,
+            "more_mode": self.more_mode,
+            "article_genre": self.article_genre,
+            "comments_count": self.comments_count,
+            "group_source": self.group_source,
+            "item_id": self.item_id,
+            "has_gallery": self.has_gallery,
+            "group_id": self.group_id,
+            "media_url": self.media_url
+        }
+        return feed
+
+
+
+
+    #生成一些虚拟数据
+    @staticmethod
+    def generate_fake(count=100):
+        from sqlalchemy.exc import IntegrityError
+        from random import seed
+        seed()
+        import forgery_py
+        for i in range(count):
+            feed = Feed.query.filter_by(id=i + 1).first()
+            if feed is None:
+                u=Feed(
+                # id=db.Column(db.Integer, primary_key=True)
+            chinese_tag =forgery_py.personal.race(), #  "中文标签"
+            media_avatar_url =forgery_py.internet.domain_name(),
+            is_feed_ad=forgery_py.basic.boolean(),
+            tag_url=forgery_py.internet.domain_name(),
+            title =forgery_py.personal.language(),
+            single_mode=forgery_py.basic.boolean(),
+            middle_mode=forgery_py.basic.boolean(),
+            abstract = forgery_py.lorem_ipsum.title(),
+            tag = forgery_py.internet.first_name(),
+            behot_time=forgery_py.date.datetime(),
+            source_url=forgery_py.internet.domain_name(),
+            source=forgery_py.name.company_name(),
+            more_mode=forgery_py.basic.boolean(),
+            article_genre=forgery_py.lorem_ipsum.title(),
+            comments_count = forgery_py.basic.number(),
+            group_source=forgery_py.basic.number(),
+            item_id=forgery_py.basic.number(),
+            has_gallery=forgery_py.basic.boolean(),
+            group_id=forgery_py.basic.number(),
+            media_url = forgery_py.internet.domain_name()
+                   )
+
+                db.session.add(u)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+
+@login_manager.user_loader
+def load_user(user_id):
+    user=User.query.get(int(user_id))
+    return user

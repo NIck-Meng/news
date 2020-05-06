@@ -6,7 +6,7 @@ from ..models import User
 import re
 from datetime import datetime
 from .forms import LoginForm,RegisterForm
-
+from flask_login import login_user,current_user,logout_user
 
 @auth.route('/simple_register', methods=['POST',"GET"])
 def simple_register():
@@ -22,12 +22,23 @@ def simple_register():
 def simple_login():
     form=LoginForm()
     if form.validate_on_submit():
-        print(form.email.data)
-        return redirect(url_for("main.index"))
-
+        admin=User.query.filter_by(email=form.email.data).first()
+        print(admin)
+        if admin is not None:
+            login_user(admin,remember=True)
+            print("success")
+            # flash("login success")
+            return redirect(url_for("main.index"))
+        else:
+             print("login failed")
 
     return render_template("auth/login.html",form=form)
 
+@auth.route('/simple_logout', methods=['POST',"GET"])
+def simple_logout():
+    logout_user()
+    print("have a good night")
+    return render_template("main/index.html")
 
 
 
