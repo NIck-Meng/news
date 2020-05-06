@@ -14,7 +14,7 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG=True
-    SQLALCHEMY_DATABASE_URI ="mysql+pymysql://root:root@localhost/news"
+    SQLALCHEMY_DATABASE_URI ="mysql+pymysql://develop:JFKL2kljf$@2(nici23@132.232.30.2/news"
 
 
 class TestingConfig(Config):
