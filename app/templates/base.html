@@ -1389,31 +1389,17 @@
 
         {% for hotnews  in hotnewslist %}
           <li class="article-item">
-            <a href="/group/6806839295328911883/" target="_blank" class="news-link">
+            <a href={{ hotnews.article_url }} target="_blank" class="news-link">
                 <div class="module-pic news-pic">
-                    <img src="//p3.pstatp.com/list/240x240/pgc-image/f6d1559984154112a9daa43ab41e38ef" lazy="loaded">
+                    <img src={{ hotnews.middle_image | dict_generator }} lazy="loaded">
                 </div>
 
                 <div class="news-inner">
-                    <p class="module-title">{{ hotnews }}</p>
+                    <p class="module-title">{{ hotnews.title }}</p>
                 </div>
             </a>
         </li>
         {% endfor %}
-
-
-
-
-    <li class="article-item">
-        <a href="/group/6806866355103465987/" target="_blank" class="news-link">
-            <div class="module-pic news-pic">
-                <img src="//p9.pstatp.com/list/240x240/pgc-image/f094fc6d2af44f9eb665795d28213dbe" lazy="loaded">
-            </div>
-            <div class="news-inner">
-                <p class="module-title">原油基金跟跌不跟涨，基金公司偷收益？说说背后可能的原因</p>
-            </div>
-        </a>
-    </li>
 
 
     </ul>

@@ -5,7 +5,6 @@ basedir=os.path.abspath(os.path.dirname(__file__))
 class Config:
     # 数据库配置
     SQLALCHEMY_COMMIT_ON_TEARDOWN= True
-    # SQLALCHEMY_ECHO = True # 输出执行的sql语句
     SQLALCHEMY_RECORD_QUERIES=True
     FLASK_DB_QUERY_TIMEOUT=0.5
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -25,6 +24,7 @@ class OnlineConfig(Config):
 
 
 class DevelopingConfig(Config):
+    SQLALCHEMY_ECHO = True # 输出执行的sql语句
     DEBUG=True
     # SQLALCHEMY_DATABASE_URI="mysql+pymysql://develop:JFKL2kljf$@2(nici23@132.232.30.2/news_test"
 

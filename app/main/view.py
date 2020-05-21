@@ -4,6 +4,7 @@ from flask_login import current_user
 from flask import render_template, session, redirect, url_for, current_app, abort, flash, request, make_response, \
     send_from_directory
 from ..models import News_List
+from sqlalchemy import and_
 @main.route("/")
 def index():
     # if current_user.is_authenticated:
@@ -41,12 +42,13 @@ def firstpage():
 def feed(id):
     print(id)
     import time
-    current_timestamps=time.time()
+    current_timestamps=time.time()-3*24*60*60
 
-    News_List.query.filter_by(id>=123)
+    news_list=News_List.query.filter(and_(News_List.middle_image!="{}",News_List.behot_time>=current_timestamps)).limit(10).all()
+
     recommends = ["美媒：世界曾因新冠病毒害怕中国，如今反过来了",
                   "21日唯一本土新增新冠肺炎确诊病例来自广东",
                   "今晚24时起！国家正式实施！"]
 
     hotnewslist = ["武汉新增病例归零啦", "美国确诊病例位列榜首", "美国加油"],
-    return render_template("main/index.html",recommends=recommends,hotnewslist=hotnewslist)
+    return render_template("main/index.html",recommends=recommends,hotnewslist=news_list)
