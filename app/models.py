@@ -5,6 +5,7 @@ from flask_login import UserMixin,AnonymousUserMixin
 from . import login_manager
 
 class BaseModel(object):
+    __bind_key__ = 'news'
     """模型基类，为每个模型补充创建时间与更新时间"""
     created = db.Column(db.DateTime, default=datetime.datetime.now())  # 记录的创建时间
     updated = db.Column(db.DateTime, default=datetime.datetime.now(), onupdate=datetime.datetime.now())  # 记录的更新时间
@@ -14,19 +15,22 @@ user_collection = db.Table(
     "user_collection",
     db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),  # 新闻编号
     db.Column("news_id", db.Integer, db.ForeignKey("news.id"), primary_key=True),  # 分类编号
-    db.Column("create_time", db.DateTime, default=datetime.datetime.now)  # 收藏创建时间
+    db.Column("create_time", db.DateTime, default=datetime.datetime.now),  # 收藏创建时间
+    info={'bind_key': 'news'}
 )
 
 user_follows = db.Table(
     "user_fans",
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),  # 粉丝id
-    db.Column('followed_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)  # 被关注人的id
+    db.Column('followed_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),  # 被关注人的id
+    info={'bind_key': 'news'}
 )
 
 
 class User(db.Model,BaseModel,UserMixin):
     """用户"""
     __tablename__ = "user"
+    __bind_key__ = 'news'
 
     id = db.Column(db.Integer, primary_key=True)  # 用户编号
     nick_name = db.Column(db.String(32), unique=True, nullable=True)  # 用户昵称
@@ -107,7 +111,7 @@ class User(db.Model,BaseModel,UserMixin):
 
 class News(db.Model,BaseModel):
     __tablename__ = "news"
-
+    __bind_key__ = 'news'
     id = db.Column(db.Integer, primary_key=True)  # 新闻编号
     title = db.Column(db.String(256), nullable=False)  # 新闻标题
     source = db.Column(db.String(64), nullable=False)  # 新闻来源
@@ -166,7 +170,7 @@ class News(db.Model,BaseModel):
 class Comment(BaseModel, db.Model):
     """评论"""
     __tablename__ = "comment"
-
+    __bind_key__ = 'news'
     id = db.Column(db.Integer, primary_key=True)  # 评论编号
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)  # 用户id
     news_id = db.Column(db.Integer, db.ForeignKey("news.id"), nullable=False)  # 新闻id
@@ -190,6 +194,7 @@ class Comment(BaseModel, db.Model):
 class CommentLike(BaseModel, db.Model):
     """评论点赞"""
     __tablename__ = "comment_like"
+    __bind_key__ = 'news'
     comment_id = db.Column("comment_id", db.Integer, db.ForeignKey("comment.id"), primary_key=True)  # 评论编号
     user_id = db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True)  # 用户编号
 
@@ -197,7 +202,7 @@ class CommentLike(BaseModel, db.Model):
 class Category(BaseModel, db.Model):
     """新闻分类"""
     __tablename__ = "category"
-
+    __bind_key__ = 'news'
     id = db.Column(db.Integer, primary_key=True)  # 分类编号
     name = db.Column(db.String(64), nullable=False)  # 分类名
     news_list = db.relationship('News', backref='category', lazy='dynamic')
@@ -213,6 +218,7 @@ class Category(BaseModel, db.Model):
 
 class Feed(db.Model):
     __tablename__ = 'Feed'
+    __bind_key__ = 'news'
     id=db.Column(db.Integer,primary_key=True)
     chinese_tag=db.Column(db.String(64),default="1")
     media_avatar_url=db.Column(db.String(64),default="www.toutiao.com")
@@ -305,6 +311,35 @@ class Feed(db.Model):
             db.session.commit()
         except IntegrityError:
             db.session.rollback()
+
+class News_List(db.Model):
+    __tablename__='news_list'
+    __bind_key__ = 'spider'
+
+    id = db.Column(db.String(256), primary_key=True,autoincrement=True)
+    item_id = db.Column(db.String(50), nullable=False)
+    abstract = db.Column(db.String(500), nullable=False)
+    article_url = db.Column(db.String(200), nullable=False)
+    type_name = db.Column(db.String(20), nullable=False)
+    user_info = db.Column(db.String(500), nullable=False)
+    comment_count = db.Column(db.Integer, nullable=False)
+    group_id = db.Column(db.String(50), nullable=False)
+    day = db.Column(db.String(20), nullable=False)
+    hot = db.Column(db.String(11), nullable=False)
+    behot_time = db.Column(db.String(11), nullable=False)
+    media_info = db.Column(db.String(500), nullable=False)
+    media_name = db.Column(db.String(50), nullable=False)
+    middle_image = db.Column(db.String(500), nullable=False)
+    publish_time = db.Column(db.String(50), nullable=False)
+    read_count = db.Column(db.Integer, nullable=False)
+    repin_count = db.Column(db.Integer, nullable=False)
+    share_count = db.Column(db.Integer, nullable=False)
+    tag = db.Column(db.String(50), nullable=False)
+    title = db.Column(db.String(200), nullable=False)
+    created = db.Column(db.TIMESTAMP, nullable=False)
+
+
+
 
 @login_manager.user_loader
 def load_user(user_id):

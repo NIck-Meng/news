@@ -29,7 +29,7 @@ def create_app(config_name):
 
     db.init_app(app)
     db.app=app
-    db.create_all()
+    db.create_all(bind=['news'])
     # Feed.generate_fake(50)
 
     from .main import main as main_blueprint

@@ -1,7 +1,13 @@
 from app import create_app,db
 from flask_script import Manager, Shell, Server
 from app.models import Feed
-app=create_app("default")
+import sys
+
+
+env="online" if sys.platform.startswith("linux") else "default"
+
+
+app=create_app(env)
 
 
 manager=Manager(app)

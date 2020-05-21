@@ -3,6 +3,7 @@ from app.main import main
 from flask_login import current_user
 from flask import render_template, session, redirect, url_for, current_app, abort, flash, request, make_response, \
     send_from_directory
+from ..models import News_List
 @main.route("/")
 def index():
     # if current_user.is_authenticated:
@@ -39,6 +40,10 @@ def firstpage():
 @main.route("/feed/<int:id>")
 def feed(id):
     print(id)
+    import time
+    current_timestamps=time.time()
+
+    News_List.query.filter_by(id>=123)
     recommends = ["美媒：世界曾因新冠病毒害怕中国，如今反过来了",
                   "21日唯一本土新增新冠肺炎确诊病例来自广东",
                   "今晚24时起！国家正式实施！"]

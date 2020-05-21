@@ -12,20 +12,30 @@ class Config:
     SECRET_KEY ="123"
     DEBUG_TB_INTERCEPT_REDIRECTS = False   #Flask_DebugToolbar会默认拦截重定向
 
-class DevelopmentConfig(Config):
+class OnlineConfig(Config):
+    DEBUG=False
+    # SQLALCHEMY_DATABASE_URI ="mysql+pymysql://develop:JFKL2kljf$@2(nici23@127.0.0.1/news"
+
+
+    SQLALCHEMY_BINDS = {
+        'news': "mysql+pymysql://develop:JFKL2kljf$@2(nici23@127.0.0.1/news",
+        'spider': "mysql+pymysql://develop:JFKL2kljf$@2(nici23@127.0.0.1/spider"
+    }
+
+
+
+class DevelopingConfig(Config):
     DEBUG=True
-    SQLALCHEMY_DATABASE_URI ="mysql+pymysql://develop:JFKL2kljf$@2(nici23@132.232.30.2/news"
+    # SQLALCHEMY_DATABASE_URI="mysql+pymysql://develop:JFKL2kljf$@2(nici23@132.232.30.2/news_test"
 
-
-class TestingConfig(Config):
-    WTF_CSRF_ENABLED=False
-    TESTING=True
-    SQLALCHEMY_DATABASE_URI="mysql+pymysql://root:root@localhost/news_test" or \
-                             'sqlite:///' + os.path.join(basedir, 'data_test.sqlite')
+    SQLALCHEMY_BINDS = {
+        'news': "mysql+pymysql://develop:JFKL2kljf$@2(nici23@132.232.30.2/news_test",
+        'spider': "mysql+pymysql://develop:JFKL2kljf$@2(nici23@132.232.30.2/spider_test"
+    }
 
 
 config_own={
-    'development':DevelopmentConfig,
-    'testing':TestingConfig,
-    'default':DevelopmentConfig
+    'online':OnlineConfig,
+    'developing':DevelopingConfig,
+    'default':DevelopingConfig
 }

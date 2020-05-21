@@ -8,7 +8,7 @@ class Test(TestCase):
         self.app = create_app('default')
         self.app_context = self.app.app_context()
         self.app_context.push()
-        db.create_all()
+        db.create_all(bind=['news_test'])
         Feed.generate_fake(50)
         self.client = self.app.test_client()
 
