@@ -4,7 +4,7 @@ from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager
-
+from extensions import dict_generator
 
 from config import config_own
 
@@ -31,6 +31,8 @@ def create_app(config_name):
     db.app=app
     db.create_all(bind=['news'])
     # Feed.generate_fake(50)
+
+    app.jinja_env.filters['dict_generator'] = dict_generator
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)

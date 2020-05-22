@@ -1,5 +1,4 @@
-from .app import login_manager
-from manage import app
+
 import json
 # 放在model才行，不知道为什么
 # @login_manager.user_loader
@@ -8,12 +7,11 @@ import json
 #     admin=Admin.query.get(int(user_id))
 #     return admin
 
-def dict_generator(raw_str:str):
+def dict_generator(raw_str:str,key:str):
     raw_str=raw_str.replace("'","\"")
-    return json.loads(raw_str)["url"]
+    return json.loads(raw_str)[key]
 
 
 
 
-env = app.jinja_env
-env.filters['dict_generator'] = dict_generator
+

@@ -37,18 +37,23 @@ def firstpage():
                            )
 
 
-
+from  extensions import dict_generator
 @main.route("/feed/<int:id>")
 def feed(id):
     print(id)
     import time
     current_timestamps=time.time()-3*24*60*60
 
-    news_list=News_List.query.filter(and_(News_List.middle_image!="{}",News_List.behot_time>=current_timestamps)).limit(10).all()
+    recommends_list=News_List.query\
+        .filter(and_(News_List.middle_image!="{}",News_List.behot_time>=current_timestamps))\
+        .limit(10).all()
 
-    recommends = ["美媒：世界曾因新冠病毒害怕中国，如今反过来了",
-                  "21日唯一本土新增新冠肺炎确诊病例来自广东",
-                  "今晚24时起！国家正式实施！"]
+    for rec in recommends_list:
+        print(dict_generator(rec.media_info,"avatar_url"))
 
-    hotnewslist = ["武汉新增病例归零啦", "美国确诊病例位列榜首", "美国加油"],
-    return render_template("main/index.html",recommends=recommends,hotnewslist=news_list)
+    hot_news_list=News_List.query\
+        .filter(and_(News_List.middle_image!="{}",News_List.behot_time>=current_timestamps))\
+        .order_by(News_List.read_count.desc())\
+        .limit(4).all()
+
+    return render_template("main/index.html",recommends_list=recommends_list,hotnewslist=hot_news_list)
