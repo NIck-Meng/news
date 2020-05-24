@@ -8,7 +8,7 @@ import json
 #     return admin
 
 def dict_generator(raw_str:str,key:str):
-    raw_str=raw_str.replace("'","\"")
+    raw_str=raw_str.replace("'","\"").replace("True","true").replace("False","false")
     return json.loads(raw_str)[key]
 
 
