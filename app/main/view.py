@@ -12,15 +12,15 @@ def index():
     # if current_user.is_authenticated:
     #     return "is_authenticated"
     import time
-    three_days_ago_timestamps = time.time() - 3 * 24 * 60 * 60
+    days_ago_timestamps = time.time() - 5 * 24 * 60 * 60
     current_timestamps=datetime.utcnow()
 
     recommends_list = News_List.query \
-        .filter(and_(News_List.middle_image != "{}", News_List.behot_time >= three_days_ago_timestamps)) \
+        .filter(and_(News_List.middle_image != "{}", News_List.behot_time >= days_ago_timestamps)) \
         .limit(10).all()
 
     hot_news_list = News_List.query \
-        .filter(and_(News_List.middle_image != "{}", News_List.behot_time >= three_days_ago_timestamps)) \
+        .filter(and_(News_List.middle_image != "{}", News_List.behot_time >= days_ago_timestamps)) \
         .order_by(News_List.read_count.desc()) \
         .limit(4).all()
 

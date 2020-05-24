@@ -1140,6 +1140,8 @@
 
     <style data-styled="" data-styled-version="4.2.0"></style>
      <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body><div><div class="toutiao-header">
 
@@ -1202,21 +1204,65 @@
         <a href="/" class="logo">
             <img src="//s3.pstatp.com/toutiao/static/img/logo.271e845.png" alt="今日头条" style="width: 108px; height: 27px;">
         </a> <!---->
-        <ul>
+        <ul id="app">
             <li>
                 <a href="/" target="_self" ga_event="channel_recommand_click" class="channel-item active">
                     <span>推荐</span>
                 </a>
             </li>
-            {% for channel in channels %}
-            <li>
-                <a href="https://www.zhihu.com/" target="_blank" ga_event="channel_video_click" class="channel-item">
-                    <span>{{ channel }}</span>
+
+
+          <li v-for="channel in channel_array">
+                 <a href="https://www.zhihu.com/" target="_blank" ga_event="channel_video_click" class="channel-item">
+                    <span>{[channel]}</span>
                 </a>
             </li>
-            {% endfor %}
+{#            {% for channel in channels %}#}
+{#            <li>#}
+{#                <a href="https://www.zhihu.com/" target="_blank" ga_event="channel_video_click" class="channel-item">#}
+{#                    <span>{{ channel }}</span>#}
+{#                </a>#}
+{#            </li>#}
+{#            {% endfor %}#}
 
-         <li class="channel-more"><a href="javascript:void(0);" class="channel-item"><span>更多</span></a> <div class="channel-more-layer"><ul class="bui-box"><li class="bui-left"><a href="/ch/news_military/" target="_self" ga_event="channel_military_click" class="channel-item"><span>军事</span></a></li><li class="bui-left"><a href="/ch/news_discovery/" target="_self" ga_event="channel_explore_click" class="channel-item"><span>探索</span></a></li></ul></div></li></ul></div></div></div> <div class="bui-left index-content"><div class="ugcBox"><div class="ugcBox-inner"><ul class="bui-box ugc-tab-list"><li class="bui-left ugc-tab-item current">发微头条</li> <li class="bui-left ugc-tab-item">写文章</li> <li class="bui-left ugc-tab-item">提问题</li> <li class="bui-left ugc-tab-item">发视频</li></ul> <div class="ugc-content"><div><div class="imgBox upload-box"><div id="pc_text" class="editor-verify"></div> <div id="pc_slide" class="editor-verify" style="display: none;"></div> <textarea placeholder="有什么新鲜事想告诉大家" class="title-input"></textarea> <p class="words-number">0/2000字</p> <div class="bui-box upload-footer"><div class="bui-left"><span ga_event="user_ugc_img_open" class="show-image-uploader show-uploader"><img src="http://sf1-ttcdn-tos.pstatp.com/obj/ttfe/toutiao.com/image-icon.png" class="image-icon"> <span>图片</span></span> <span class="show-emoji show-uploader"><img src="http://sf1-ttcdn-tos.pstatp.com/obj/ttfe/toutiao.com/emoji-icon.png" class="image-icon"> <span>表情</span></span></div> <div class="bui-right"><span class="msg-tip"></span> <a class="upload-publish">发布</a></div></div> <div class="uploader-popup" style="display: none;"><div class="imgUploadBox"><p class="uploader-title">本地上传</p> <p class="uploader-meta">共 0 张，还能上传 9 张</p> <i class="bui-icon close-popup icon-close_small"></i> <div class="bui-box upload-box"><form style="display: none;"><input id="fileElem" type="file" accept="image/*" multiple="multiple"></form> <ul class="upload-img-list">  <li ga_event="user_ugc_img_upload" class="upload-img-item upload-img-add"><i class="bui-icon icon-add_small" style="font-size: 30px; color: rgb(221, 221, 221);"></i></li></ul></div></div></div> <div class="uploader-popup emoji-panel" style="display: none;"><i class="bui-icon close-popup icon-close_small"></i> <div class="emoji-box"><div class="emoji-list"><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_1_smile@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_2_kiss@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_3_daze@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_4_smoke@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_5_pick_nose@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_6_cry@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_7_anger@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_8_laugh@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_9_sleep@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_10_shy@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_11_naughty@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_12_dizzy@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_13_stunned@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_14_shut_up@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_15_wit@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_16_attention@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_17_hand_sample@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_18_ye@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_19_distress_situation@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_20_play_face@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_21_smile@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_22_yawn@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_23_surprise@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_24_take_heart@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_25_sleepy@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_26_what@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_27_sobbing@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_28_handclap@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_29_cool@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_29_cool@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_30_titter@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_31_lightning_strike@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_32_meditation@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_33_vomiting_blood@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_34_acting_cute@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_35_quietly@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_36_hum@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_37_khan@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_38_forced_smile@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_39_haze@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_40_smirk@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_41_cool@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_42_bad_smile@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_43_crazy@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_44_tears@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_45_money@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_46_kiss@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_47_fear@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_48_smile@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_49_injustice@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_50_their@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_51_focus@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_52_like@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_53_handclap@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_54_3Q@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_54_3Q@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_55_kiss@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_56_household_cleanser@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_57_666@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_58_rose@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_59_cucumber@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_60_beer@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_61_distress_situation@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_62_injustice@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_63_lick_screen@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_64_despise@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_65_kiss@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_66_bye@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_67_erkang@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_68_hug@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_69_hitler@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_70_zhoudongyu_gaze@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_71_masichun_smile@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_72_dogo@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_73_cat@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_74_2ha@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_75_dogo@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_76_bear@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_77_skeleton@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_78_black_face@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_79_eat_melon@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_80_green_hat@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_81_sweat@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_82_lear_ropes@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_83_frown@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_84_wipe_sweat@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_85_redface@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_86_orz@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_87_makeface@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_88_intensity@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_89_ruhua@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_90_spit@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_91_surprise@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_92_knock@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_93_refuel@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_94_rainbow@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_95_bigcry@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_96_fingerheart@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_97_refuel@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_98_fist@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_99_OK@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_100_highfive@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_101_left@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_102_shakehand@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_103_18@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_104_knife@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_105_V5@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_106_awesome@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_107_heart@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_108_broken_heart@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_109_shit@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_110_gifts@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_111_cake@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_112_flower@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_113_lookat@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_114_bomb@3x.png&quot;);"></i></div></div></div></div></div> <!----> <!----> <!----></div> <!----></div></div> <div class="feed-infinite-wrapper"><div class="loading ball-pulse" style="display: none;"><div></div> <div></div> <div></div> <span>推荐中⋅⋅⋅</span></div> <div><div class="msg-alert msg-alert-hidden"><span>为您推荐了10篇文章</span> <!----></div> <div class="msgAlert-place" style="display: none;"><div ga_event="refresh_float_click" class="msg-alert"><span>您有未读新闻，点击查看</span> <i class="bui-icon icon-close_small" style="font-size: 15px; color: rgb(255, 255, 255);"></i></div></div></div>
+
+
+
+
+         <li class="channel-more"><a href="javascript:void(0);" class="channel-item"><span>更多</span></a> <div class="channel-more-layer"><ul class="bui-box"><li class="bui-left"><a href="/ch/news_military/" target="_self" ga_event="channel_military_click" class="channel-item"><span>军事</span></a></li><li class="bui-left"><a href="/ch/news_discovery/" target="_self" ga_event="channel_explore_click" class="channel-item"><span>探索</span></a></li></ul></div></li>
+
+        <input type="button" value="更新栏目" @click="get_channels">
+        </ul>
+
+     <script>
+    var app=new Vue({
+        delimiters: ['{[', ']}'],
+        el:"#app",
+        data:{
+            channel_array:[
+                "财经",
+                '健康',
+                "汽车"
+            ],
+       methods:{
+                get_channels:function(){
+                var that=this;
+                axios.get("/get_feed/3")
+                .then(function(response){
+                    console.log(response.data);
+                    that.channel_array.push(response.data);
+                })
+                },
+                next:function(){
+                    this.index++;
+                },
+            }
+        }})
+    </script>
+
+
+
+    </div></div></div> <div class="bui-left index-content"><div class="ugcBox"><div class="ugcBox-inner"><ul class="bui-box ugc-tab-list"><li class="bui-left ugc-tab-item current">发微头条</li> <li class="bui-left ugc-tab-item">写文章</li> <li class="bui-left ugc-tab-item">提问题</li> <li class="bui-left ugc-tab-item">发视频</li></ul> <div class="ugc-content"><div><div class="imgBox upload-box"><div id="pc_text" class="editor-verify"></div> <div id="pc_slide" class="editor-verify" style="display: none;"></div> <textarea placeholder="有什么新鲜事想告诉大家" class="title-input"></textarea> <p class="words-number">0/2000字</p> <div class="bui-box upload-footer"><div class="bui-left"><span ga_event="user_ugc_img_open" class="show-image-uploader show-uploader"><img src="http://sf1-ttcdn-tos.pstatp.com/obj/ttfe/toutiao.com/image-icon.png" class="image-icon"> <span>图片</span></span> <span class="show-emoji show-uploader"><img src="http://sf1-ttcdn-tos.pstatp.com/obj/ttfe/toutiao.com/emoji-icon.png" class="image-icon"> <span>表情</span></span></div> <div class="bui-right"><span class="msg-tip"></span> <a class="upload-publish">发布</a></div></div> <div class="uploader-popup" style="display: none;"><div class="imgUploadBox"><p class="uploader-title">本地上传</p> <p class="uploader-meta">共 0 张，还能上传 9 张</p> <i class="bui-icon close-popup icon-close_small"></i> <div class="bui-box upload-box"><form style="display: none;"><input id="fileElem" type="file" accept="image/*" multiple="multiple"></form> <ul class="upload-img-list">  <li ga_event="user_ugc_img_upload" class="upload-img-item upload-img-add"><i class="bui-icon icon-add_small" style="font-size: 30px; color: rgb(221, 221, 221);"></i></li></ul></div></div></div> <div class="uploader-popup emoji-panel" style="display: none;"><i class="bui-icon close-popup icon-close_small"></i> <div class="emoji-box"><div class="emoji-list"><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_1_smile@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_2_kiss@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_3_daze@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_4_smoke@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_5_pick_nose@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_6_cry@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_7_anger@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_8_laugh@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_9_sleep@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_10_shy@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_11_naughty@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_12_dizzy@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_13_stunned@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_14_shut_up@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_15_wit@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_16_attention@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_17_hand_sample@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_18_ye@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_19_distress_situation@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_20_play_face@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_21_smile@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_22_yawn@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_23_surprise@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_24_take_heart@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_25_sleepy@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_26_what@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_27_sobbing@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_28_handclap@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_29_cool@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_29_cool@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_30_titter@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_31_lightning_strike@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_32_meditation@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_33_vomiting_blood@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_34_acting_cute@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_35_quietly@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_36_hum@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_37_khan@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_38_forced_smile@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_39_haze@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_40_smirk@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_41_cool@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_42_bad_smile@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_43_crazy@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_44_tears@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_45_money@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_46_kiss@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_47_fear@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_48_smile@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_49_injustice@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_50_their@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_51_focus@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_52_like@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_53_handclap@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_54_3Q@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_54_3Q@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_55_kiss@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_56_household_cleanser@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_57_666@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_58_rose@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_59_cucumber@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_60_beer@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_61_distress_situation@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_62_injustice@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_63_lick_screen@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_64_despise@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_65_kiss@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_66_bye@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_67_erkang@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_68_hug@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_69_hitler@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_70_zhoudongyu_gaze@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_71_masichun_smile@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_72_dogo@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_73_cat@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_74_2ha@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_75_dogo@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_76_bear@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_77_skeleton@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_78_black_face@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_79_eat_melon@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_80_green_hat@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_81_sweat@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_82_lear_ropes@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_83_frown@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_84_wipe_sweat@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_85_redface@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_86_orz@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_87_makeface@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_88_intensity@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_89_ruhua@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_90_spit@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_91_surprise@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_92_knock@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_93_refuel@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_94_rainbow@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_95_bigcry@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_96_fingerheart@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_97_refuel@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_98_fist@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_99_OK@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_100_highfive@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_101_left@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_102_shakehand@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_103_18@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_104_knife@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_105_V5@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_106_awesome@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_107_heart@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_108_broken_heart@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_109_shit@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_110_gifts@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_111_cake@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_112_flower@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_113_lookat@3x.png&quot;);"></i><i class="emoji" style="background-image: url(&quot;//s3.pstatp.com/toutiao/tt_tps/static/images/ttemoji_v2/emoji_114_bomb@3x.png&quot;);"></i></div></div></div></div></div> <!----> <!----> <!----></div> <!----></div></div> <div class="feed-infinite-wrapper"><div class="loading ball-pulse" style="display: none;"><div></div> <div></div> <div></div> <span>推荐中⋅⋅⋅</span></div> <div><div class="msg-alert msg-alert-hidden"><span>为您推荐了10篇文章</span> <!----></div> <div class="msgAlert-place" style="display: none;"><div ga_event="refresh_float_click" class="msg-alert"><span>您有未读新闻，点击查看</span> <i class="bui-icon icon-close_small" style="font-size: 15px; color: rgb(255, 255, 255);"></i></div></div></div>
     <ul infinite-scroll-disabled="loading" infinite-scroll-immediate-check="containerCheck" infinite-scroll-immediate-check-count="containerCheckCount" infinite-scroll-distance="80">
 
 
@@ -1247,28 +1293,29 @@
         {% endfor %}
     <a id="test-link" href="#0">点击刷新</a>
 
-<script>
-    var a = $('#test-link');
-a.on('click', function () {
-    $.getJSON('/get_feed/2',function(result){
-        console.log(result)
-
-    });
-
-
-
+{#<script>#}
+{#    var a = $('#test-link');#}
+{#a.on('click', function () {#}
+{#    $.getJSON('/get_feed/2',function(result){#}
+{#        console.log(result)#}
+{##}
+{#    });#}
+{##}
+{##}
+{##}
     {#alert('Hello!');#}
     {#var feed=$.ajax('/get_feed/2',{dataType:'json'});#}
     {#console.log(feed);#}
-
-});
-
-
-
+{##}
+{#});#}
+{#</script>#}
 
 
 
-</script>
+
+
+
+
 
 </ul> <div class="hide-loading"><div class="loading ball-pulse"><div></div> <div></div> <div></div> <span>加载中⋅⋅⋅</span></div></div></div></div> <div id="rightModule" class="bui-right index-right-bar"><div ga_event="index_search_click" class="search-wrapper"><div class="search-wrap"><div class="tt-autocomplete"><div class="tt-input tt-input-group tt-input-group--append"><!----> <!----> <input type="text" placeholder="搜索站内资讯、视频或用户" autocomplete="off" class="tt-input__inner"> <!----> <div class="tt-input-group__append"><button type="button" class="tt-button tt-button--default"><!----> <!----> <span>搜索</span></button></div></div> <div class="tt-autocomplete-suggestion" style="display: none;"><div class="tt-scrollbar"><div class="tt-autocomplete-suggestion__wrap tt-scrollbar__wrap" style="margin-bottom: -17px; margin-right: -17px;"><ul class="tt-scrollbar__view tt-autocomplete-suggestion__list" style="position: relative;"><div class="resize-triggers"><div class="expand-trigger"><div style="width: 1px; height: 1px;"></div></div><div class="contract-trigger"></div></div></ul></div><div class="tt-scrollbar__bar is-horizontal"><div class="tt-scrollbar__thumb" style="transform: translateX(0%);"></div></div><div class="tt-scrollbar__bar is-vertical"><div class="tt-scrollbar__thumb" style="transform: translateY(0%);"></div></div></div></div></div></div></div> <div>
 
@@ -1368,102 +1415,112 @@ a.on('click', function () {
         </li> <!---->
     </ul>
 </div>
+{##}
+{#<script>#}
+{#    var PAGE_SWITCH = {};#}
+{#  try {#}
+{#    PAGE_SWITCH = JSON.parse('{"adScriptQihu":false,"adScriptTB":false,"anti_spam":false,"migScriptUrl":"//s3a.pstatp.com/toutiao/picc_mig/dist/img.min.js","nineteen":"","picVersion":"20180412_01","qihuAdShow":false,"taVersion":"20171221_1","ttAdShow":false}');#}
+{#  } catch (e) {}#}
+{#</script>#}
+{##}
+{#<script>var BASE_DATA = {#}
+{#    category: '__all__',#}
+{#    headerInfo: {#}
+{#      id: 0,#}
+{#      isPgc: false,#}
+{#      userName: '',#}
+{#      avatarUrl: '',#}
+{#      isHomePage: true,#}
+{#      chineseTag: '',#}
+{#      crumbTag: '',#}
+{#      hasBar: false#}
+{#    },#}
+{#    loginInfo:{#}
+{#      id: 0,#}
+{#      userName: '',#}
+{#      avatarUrl: '',#}
+{#      following: 0,#}
+{#      fans: 0#}
+{#    },#}
+{#    tag: '/',#}
+{#    province: '上海',#}
+{#    isLogin: 0#}
+{#  };</script>#}
 
-<script>
-    var PAGE_SWITCH = {};
-  try {
-    PAGE_SWITCH = JSON.parse('{"adScriptQihu":false,"adScriptTB":false,"anti_spam":false,"migScriptUrl":"//s3a.pstatp.com/toutiao/picc_mig/dist/img.min.js","nineteen":"","picVersion":"20180412_01","qihuAdShow":false,"taVersion":"20171221_1","ttAdShow":false}');
-  } catch (e) {}</script><script>var BASE_DATA = {
-    category: '__all__',
-    headerInfo: {
-      id: 0,
-      isPgc: false,
-      userName: '',
-      avatarUrl: '',
-      isHomePage: true,
-      chineseTag: '',
-      crumbTag: '',
-      hasBar: false
-    },
-    loginInfo:{
-      id: 0,
-      userName: '',
-      avatarUrl: '',
-      following: 0,
-      fans: 0
-    },
-    tag: '/',
-    province: '上海',
-    isLogin: 0
-  };</script>
+{#<script>var imgUrl = '/c/kgh1tcmyryffi40bli478t0m6j8ooc1kp8je4eme2s5a0nl929qcyhbymwdl/';</script><script></script><script type="text/javascript" crossorigin="anonymous" src="//s3.pstatp.com/toutiao/static/js/vendor.e2caf4792c6de5bf3950.js"></script><script type="text/javascript" crossorigin="anonymous" src="//s3a.pstatp.com/toutiao/static/js/page/index_node/index.88f72107a4b340527de1.js"></script><script type="text/javascript" crossorigin="anonymous" src="//s3b.pstatp.com/toutiao/static/js/ttstatistics.a083f6cd9b1a9a970725.js"></script><script src="//s3.pstatp.com/inapp/lib/raven.js" crossorigin="anonymous"></script>#}
 
-<script>var imgUrl = '/c/kgh1tcmyryffi40bli478t0m6j8ooc1kp8je4eme2s5a0nl929qcyhbymwdl/';</script><script></script><script type="text/javascript" crossorigin="anonymous" src="//s3.pstatp.com/toutiao/static/js/vendor.e2caf4792c6de5bf3950.js"></script><script type="text/javascript" crossorigin="anonymous" src="//s3a.pstatp.com/toutiao/static/js/page/index_node/index.88f72107a4b340527de1.js"></script><script type="text/javascript" crossorigin="anonymous" src="//s3b.pstatp.com/toutiao/static/js/ttstatistics.a083f6cd9b1a9a970725.js"></script><script src="//s3.pstatp.com/inapp/lib/raven.js" crossorigin="anonymous"></script><script>;(function(window) {
-    // sentry
-    window.Raven && Raven.config('//key@m.toutiao.com/log/sentry/v2/96', {
-      whitelistUrls: [/pstatp\.com/],
-      shouldSendCallback: function(data) {
-        var ua = navigator && navigator.userAgent;
-        var isDeviceOK = !/Mobile|Linux/i.test(navigator.userAgent);
-        return isDeviceOK;
-      },
-      tags: {
-        bid: 'toutiao_pc',
-        pid: 'index_new'
-      },
-      autoBreadcrumbs: {
-        'xhr': false,
-        'console': true,
-        'dom': true,
-        'location': true
-      }
-    }).install();
-  })(window);</script><script>(function(win, export_obj) {
-      win['TeaAnalyticsObject'] = export_obj;
-      if (!win[export_obj]) {
-          function _collect() {
-              _collect.q.push(arguments);
-          }
-          _collect.q = _collect.q || [];
-          win[export_obj] = _collect;
-      }
-      win[export_obj].l = +new Date();
-  })(window, 'collectEvent');</script>
+{#<script>;(function(window) {#}
+{#    // sentry#}
+{#    window.Raven && Raven.config('//key@m.toutiao.com/log/sentry/v2/96', {#}
+{#      whitelistUrls: [/pstatp\.com/],#}
+{#      shouldSendCallback: function(data) {#}
+{#        var ua = navigator && navigator.userAgent;#}
+{#        var isDeviceOK = !/Mobile|Linux/i.test(navigator.userAgent);#}
+{#        return isDeviceOK;#}
+{#      },#}
+{#      tags: {#}
+{#        bid: 'toutiao_pc',#}
+{#        pid: 'index_new'#}
+{#      },#}
+{#      autoBreadcrumbs: {#}
+{#        'xhr': false,#}
+{#        'console': true,#}
+{#        'dom': true,#}
+{#        'location': true#}
+{#      }#}
+{#    }).install();#}
+{#  })(window);#}
+{#</script>#}
+
+{#<script>(function(win, export_obj) {#}
+{#      win['TeaAnalyticsObject'] = export_obj;#}
+{#      if (!win[export_obj]) {#}
+{#          function _collect() {#}
+{#              _collect.q.push(arguments);#}
+{#          }#}
+{#          _collect.q = _collect.q || [];#}
+{#          win[export_obj] = _collect;#}
+{#      }#}
+{#      win[export_obj].l = +new Date();#}
+{#  })(window, 'collectEvent');#}
+{#</script>#}
 
 {#<script async="" src="https://s3.pstatp.com/pgc/tech/collect/collect-v.3.2.14.js"></script>#}
 
-<script>// Init tea log
-  window.collectEvent('init', {
-    app_id: 2256,
-    channel: 'cn',
-    log: false, // 开启调试日志
-  });
-  window.collectEvent('start');
-  window.collectEvent('pageview', {
-    'from': 'index',
-  });
+{#<script>// Init tea log#}
+{#  window.collectEvent('init', {#}
+{#    app_id: 2256,#}
+{#    channel: 'cn',#}
+{#    log: false, // 开启调试日志#}
+{#  });#}
+{#  window.collectEvent('start');#}
+{#  window.collectEvent('pageview', {#}
+{#    'from': 'index',#}
+{#  });#}
+{##}
+{#  if (window.ttAnalysis) {#}
+{#    ttAnalysis.setup({#}
+{#      c: '/'#}
+{#    });#}
+{#    ttAnalysis.send('pageview', {});#}
+{#  }</script>#}
 
-  if (window.ttAnalysis) {
-    ttAnalysis.setup({
-      c: '/'
-    });
-    ttAnalysis.send('pageview', {});
-  }</script><script>document.getElementsByTagName('body')[0].addEventListener('click', function(e) {
-    var target = e.target,
-        ga_event,
-        ga_category,
-        ga_label,
-        ga_value;
-    while(target && target.nodeName.toUpperCase() !== 'BODY') {
-      ga_event = target.getAttribute('ga_event');
-      ga_category = target.getAttribute('ga_category') || '/';
-      ga_label = target.getAttribute('ga_label') || '';
-      ga_value = target.getAttribute('ga_value') || 1;
-
-      ga_event && window.ttAnalysis && ttAnalysis.send('event', { ev: ga_event });
-      target = target.parentNode;
-    }
-  });</script>
-
+{#<script>document.getElementsByTagName('body')[0].addEventListener('click', function(e) {#}
+{#    var target = e.target,#}
+{#        ga_event,#}
+{#        ga_category,#}
+{#        ga_label,#}
+{#        ga_value;#}
+{#    while(target && target.nodeName.toUpperCase() !== 'BODY') {#}
+{#      ga_event = target.getAttribute('ga_event');#}
+{#      ga_category = target.getAttribute('ga_category') || '/';#}
+{#      ga_label = target.getAttribute('ga_label') || '';#}
+{#      ga_value = target.getAttribute('ga_value') || 1;#}
+{##}
+{#      ga_event && window.ttAnalysis && ttAnalysis.send('event', { ev: ga_event });#}
+{#      target = target.parentNode;#}
+{#    }#}
+{#  });</script>#}
 
 <!--引入Moment依赖库-->
 {{moment.include_jquery()}}

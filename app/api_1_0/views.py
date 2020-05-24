@@ -1,6 +1,6 @@
 import time
 from datetime import datetime
-
+import random
 from flask import jsonify, request, g, url_for, current_app
 from sqlalchemy import and_
 
@@ -34,4 +34,10 @@ def feed(num):
                    hot_news_list=[v.to_json() for v in hot_news_list],
                    current_timestamps=current_timestamps
                   )
-
+@api.route("/get_channel/<int:n>")
+def get_channel(n):
+    rslt=[]
+    channel_list=["5G","芯片",'健康','历史','军事','政治','财经','国学','新冠疫情','教育']
+    for i in  range(n):
+        rslt.append(random.choice(channel_list))
+    return jsonify(rslt)
