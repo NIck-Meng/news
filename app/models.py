@@ -338,6 +338,34 @@ class News_List(db.Model):
     title = db.Column(db.String(200), nullable=False)
     created = db.Column(db.TIMESTAMP, nullable=False)
 
+    def to_json(self):
+        return {
+            "item_id": self.item_id,
+            "abstract": self.abstract,
+            "article_url": self.article_url,
+            "type_name": self.type_name,
+            "user_info": self.user_info,
+            "comment_count": self.comment_count,
+            "group_id": self.group_id,
+            "day": self.day,
+            "hot": self.hot,
+            "behot_time": self.behot_time,
+            "media_info": self.media_info,
+            "media_name": self.media_name,
+            "middle_image": self.middle_image,
+            "publish_time": self.publish_time,
+            "read_count": self.read_count,
+            "repin_count": self.repin_count,
+            "share_count": self.share_count,
+            "tag": self.tag,
+            "title": self.title,
+            "created": self.created
+        }
+
+
+
+
+
 
 
 

@@ -1138,7 +1138,10 @@
 
 {#    <script charset="utf-8" src="https://unpkg.pstatp.com/byted/secsdk-captcha/2.6.0/build/static/js/2.js"></script>#}
 
-    <style data-styled="" data-styled-version="4.2.0"></style></head><body><div><div class="toutiao-header">
+    <style data-styled="" data-styled-version="4.2.0"></style>
+     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
+<body><div><div class="toutiao-header">
 
     <div class="topbar">
         <div class="bui-left clearfix"><a href="//app.toutiao.com/news_article/" target="_blank" ga_event="mh_nav_others" class="download-app tb-link">下载APP</a>
@@ -1242,8 +1245,30 @@
             </div>
         </li>
         {% endfor %}
+    <a id="test-link" href="#0">点击刷新</a>
+
+<script>
+    var a = $('#test-link');
+a.on('click', function () {
+    $.getJSON('/get_feed/2',function(result){
+        console.log(result)
+
+    });
 
 
+
+    {#alert('Hello!');#}
+    {#var feed=$.ajax('/get_feed/2',{dataType:'json'});#}
+    {#console.log(feed);#}
+
+});
+
+
+
+
+
+
+</script>
 
 </ul> <div class="hide-loading"><div class="loading ball-pulse"><div></div> <div></div> <div></div> <span>加载中⋅⋅⋅</span></div></div></div></div> <div id="rightModule" class="bui-right index-right-bar"><div ga_event="index_search_click" class="search-wrapper"><div class="search-wrap"><div class="tt-autocomplete"><div class="tt-input tt-input-group tt-input-group--append"><!----> <!----> <input type="text" placeholder="搜索站内资讯、视频或用户" autocomplete="off" class="tt-input__inner"> <!----> <div class="tt-input-group__append"><button type="button" class="tt-button tt-button--default"><!----> <!----> <span>搜索</span></button></div></div> <div class="tt-autocomplete-suggestion" style="display: none;"><div class="tt-scrollbar"><div class="tt-autocomplete-suggestion__wrap tt-scrollbar__wrap" style="margin-bottom: -17px; margin-right: -17px;"><ul class="tt-scrollbar__view tt-autocomplete-suggestion__list" style="position: relative;"><div class="resize-triggers"><div class="expand-trigger"><div style="width: 1px; height: 1px;"></div></div><div class="contract-trigger"></div></div></ul></div><div class="tt-scrollbar__bar is-horizontal"><div class="tt-scrollbar__thumb" style="transform: translateX(0%);"></div></div><div class="tt-scrollbar__bar is-vertical"><div class="tt-scrollbar__thumb" style="transform: translateY(0%);"></div></div></div></div></div></div></div> <div>
 

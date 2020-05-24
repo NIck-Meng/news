@@ -31,6 +31,3 @@ def index():
                            channels=["5G","中国芯片"])
 
 
-@main.route("/feed/12")
-def feed(id):
-    return "hello"
